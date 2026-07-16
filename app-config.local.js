@@ -6,6 +6,6 @@ window.APP_CONFIG = {
   // 1) Create bot with @BotFather
   // 2) Put bot token here
   // 3) Put target chat/group/channel ID here
-  TELEGRAM_BOT_TOKEN: "",
-  TELEGRAM_CHAT_ID: ""
+  TELEGRAM_BOT_TOKEN: "8942966259:AAEf6OfWWTQoZ7fKzTXdeGSkEl3qEeb6lzk",
+  TELEGRAM_CHAT_ID: "5643243693"
 };
