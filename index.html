@@ -6342,6 +6342,39 @@
             }
          })();
       </script>
+      <script type="text/javascript">
+         (function () {
+            function closePopup(event) {
+               var closeButton = event.target.closest('.popup-close');
+               if (!closeButton) {
+                  return;
+               }
+
+               var popup = closeButton.closest('[data-popup-backdrop="true"]');
+               if (!popup) {
+                  return;
+               }
+
+               event.preventDefault();
+               event.stopPropagation();
+
+               var backdrop = document.getElementById('backdrop-popup');
+               if (backdrop) {
+                  backdrop.click();
+               }
+            }
+
+            function init() {
+               document.addEventListener('click', closePopup, true);
+            }
+
+            if (document.readyState === 'loading') {
+               document.addEventListener('DOMContentLoaded', init);
+            } else {
+               init();
+            }
+         })();
+      </script>
       <script id="script_event_data" type="application/json">
         {
             "POPUP2": {
