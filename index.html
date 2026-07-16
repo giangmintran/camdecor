@@ -77,7 +77,7 @@
         </div>
         <div class="flex items-center space-x-4">
             <a href="tel:0901234567" class="hover:text-cam-100 transition"><i class="fa-solid fa-phone mr-1"></i> Hotline: 090 123 4567</a>
-            <a href="#" class="hidden md:inline-flex hover:text-cam-100 transition"><i class="fa-solid fa-comment-dots mr-1"></i> Zalo CSKH</a>
+            <a href="https://zalo.me/0901234567" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex hover:text-cam-100 transition"><i class="fa-solid fa-comment-dots mr-1"></i> Zalo CSKH</a>
         </div>
     </div>
 
@@ -555,15 +555,15 @@
                     <form id="purchase-form" onsubmit="event.preventDefault(); submitForm();" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Họ và Tên *</label>
-                            <input type="text" required placeholder="Nhập họ tên của bạn" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cam-500 focus:border-cam-500 outline-none transition">
+                            <input type="text" id="full-name" name="fullName" required placeholder="Nhập họ tên của bạn" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cam-500 focus:border-cam-500 outline-none transition">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Số Điện Thoại *</label>
-                            <input type="tel" required placeholder="Nhập số điện thoại" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cam-500 focus:border-cam-500 outline-none transition">
+                            <input type="tel" id="phone" name="phone" required placeholder="Nhập số điện thoại" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cam-500 focus:border-cam-500 outline-none transition">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ giao hàng *</label>
-                            <input type="text" required placeholder="Số nhà, đường, phường/xã, quận/huyện..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cam-500 focus:border-cam-500 outline-none transition">
+                            <input type="text" id="address" name="address" required placeholder="Số nhà, đường, phường/xã, quận/huyện..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cam-500 focus:border-cam-500 outline-none transition">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Chọn màu sắc *</label>
@@ -592,10 +592,11 @@
                         </div>
                         
                         <div class="pt-4">
-                            <button type="submit" class="w-full bg-cam-600 hover:bg-cam-700 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-cam-600/30 flex items-center justify-center gap-2">
+                            <button id="submit-order-btn" type="submit" class="w-full bg-cam-600 hover:bg-cam-700 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-cam-600/30 flex items-center justify-center gap-2">
                                 HOÀN TẤT ĐẶT HÀNG
                             </button>
                             <p class="text-center text-xs text-gray-500 mt-3">Cam kết bảo mật thông tin. Nhân viên sẽ gọi lại xác nhận trong 15 phút.</p>
+                            <p id="form-status" class="hidden text-center text-sm mt-3"></p>
                         </div>
                     </form>
 
@@ -759,11 +760,186 @@
             */
         }
 
-        // 3. Form Submit Simulation
-        function submitForm() {
+        // 3. Form Submit + Notify (Google Sheets / Telegram / Zalo Webhook)
+        // Runtime config for static hosting (for example: GitHub Pages).
+        // You can inject values via window.APP_CONFIG in deploy pipeline.
+        const APP_CONFIG = window.APP_CONFIG || {};
+        const GOOGLE_SHEET_WEBHOOK_URL = APP_CONFIG.GOOGLE_SHEET_WEBHOOK_URL || '__GOOGLE_SHEET_WEBHOOK_URL__';
+        const TELEGRAM_BOT_TOKEN = APP_CONFIG.TELEGRAM_BOT_TOKEN || '';
+        const TELEGRAM_CHAT_ID = APP_CONFIG.TELEGRAM_CHAT_ID || '';
+        const ZALO_OA_WEBHOOK_URL = APP_CONFIG.ZALO_OA_WEBHOOK_URL || '';
+
+        function getColorLabel(colorValue) {
+            const colorMap = {
+                cam: 'Cam Đất',
+                be: 'Be Nhạt',
+                xam: 'Xám Đậm',
+                navy: 'Xanh Navy'
+            };
+
+            return colorMap[colorValue] || colorValue;
+        }
+
+        function normalizeVietnamPhone(phone) {
+            const digits = (phone || '').replace(/\D/g, '');
+
+            if (digits.startsWith('84') && digits.length === 11) {
+                return '0' + digits.slice(2);
+            }
+
+            if (digits.startsWith('0') && digits.length === 10) {
+                return digits;
+            }
+
+            return digits;
+        }
+
+        function isValidVietnamPhone(phone) {
+            const normalized = normalizeVietnamPhone(phone);
+            return /^(03|05|07|08|09)\d{8}$/.test(normalized);
+        }
+
+        async function sendOrderToGoogleSheet(payload) {
+            if (!GOOGLE_SHEET_WEBHOOK_URL || GOOGLE_SHEET_WEBHOOK_URL.includes('__GOOGLE_SHEET_WEBHOOK_URL__')) {
+                throw new Error('missing_google_sheet_webhook');
+            }
+
+            await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            return true;
+        }
+
+        async function sendTelegramNotification(payload) {
+            if (!TELEGRAM_BOT_TOKEN) {
+                return false;
+            }
+
+            if (!TELEGRAM_CHAT_ID) {
+                return false;
+            }
+
+            const telegramMessage = [
+                'Don moi tu website Cam Decor',
+                'Khach hang: ' + payload.fullName,
+                'So dien thoai: ' + payload.phone,
+                'Dia chi: ' + payload.address,
+                'Mau sac: ' + payload.colorLabel,
+                'Thoi gian: ' + payload.submittedAt
+            ].join('\n');
+
+            const telegramUrl = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
+            const res = await fetch(telegramUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: telegramMessage
+                })
+            });
+
+            return res.ok;
+        }
+
+        async function sendZaloNotification(payload) {
+            // Zalo OA API usually requires server-side token handling.
+            // This function posts to your custom webhook gateway.
+            if (!ZALO_OA_WEBHOOK_URL) {
+                return false;
+            }
+
+            const res = await fetch(ZALO_OA_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    channel: 'zalo_oa',
+                    order: payload
+                })
+            });
+
+            return res.ok;
+        }
+
+        async function submitForm() {
+            const form = document.getElementById('purchase-form');
             const successMsg = document.getElementById('success-message');
-            successMsg.classList.remove('hidden');
-            successMsg.classList.add('flex');
+            const submitBtn = document.getElementById('submit-order-btn');
+            const statusEl = document.getElementById('form-status');
+            const formData = new FormData(form);
+
+            const rawPhone = (formData.get('phone') || '').toString().trim();
+            const normalizedPhone = normalizeVietnamPhone(rawPhone);
+
+            if (!isValidVietnamPhone(rawPhone)) {
+                statusEl.textContent = 'Số điện thoại chưa đúng định dạng Việt Nam. Vui lòng kiểm tra lại.';
+                statusEl.className = 'text-center text-sm mt-3 text-red-600';
+                return;
+            }
+
+            const payload = {
+                submittedAt: new Date().toISOString(),
+                fullName: (formData.get('fullName') || '').toString().trim(),
+                phone: normalizedPhone,
+                address: (formData.get('address') || '').toString().trim(),
+                colorValue: (formData.get('color') || '').toString(),
+                colorLabel: getColorLabel((formData.get('color') || '').toString()),
+                pageUrl: window.location.href,
+                userAgent: navigator.userAgent
+            };
+
+            statusEl.classList.add('hidden');
+            statusEl.textContent = '';
+
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+            submitBtn.textContent = 'ĐANG GỬI THÔNG TIN...';
+
+            try {
+                const [sheetResult, telegramResult, zaloResult] = await Promise.allSettled([
+                    sendOrderToGoogleSheet(payload),
+                    sendTelegramNotification(payload),
+                    sendZaloNotification(payload)
+                ]);
+
+                if (sheetResult.status !== 'fulfilled') {
+                    throw new Error('sheet_submit_failed');
+                }
+
+                successMsg.classList.remove('hidden');
+                successMsg.classList.add('flex');
+                form.reset();
+
+                const notifyWarnings = [];
+                if (telegramResult.status === 'rejected' || telegramResult.value === false) {
+                    notifyWarnings.push('Telegram');
+                }
+                if (zaloResult.status === 'rejected' || zaloResult.value === false) {
+                    notifyWarnings.push('Zalo OA');
+                }
+
+                if (notifyWarnings.length > 0) {
+                    statusEl.textContent = 'Đơn hàng đã lưu, nhưng chưa gửi thông báo: ' + notifyWarnings.join(', ');
+                    statusEl.className = 'text-center text-sm mt-3 text-amber-600';
+                }
+            } catch (error) {
+                console.error('Submit order failed:', error);
+                statusEl.textContent = 'Không thể gửi đơn hàng. Vui lòng kiểm tra cấu hình webhook hoặc thử lại sau.';
+                statusEl.className = 'text-center text-sm mt-3 text-red-600';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+                submitBtn.textContent = 'HOÀN TẤT ĐẶT HÀNG';
+            }
         }
 
         // 4. Popup Logic
