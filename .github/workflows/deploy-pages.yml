@@ -22,29 +22,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare Pages build
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          set -eu
+      # - name: Inject runtime variables
+      #   env:
+      #     GOOGLE_SHEET_WEBHOOK_URL: ${{ secrets.GOOGLE_SHEET_WEBHOOK_URL }}
+      #   run: |
+      #     if [ -z "$GOOGLE_SHEET_WEBHOOK_URL" ]; then
+      #       echo "Secret GOOGLE_SHEET_WEBHOOK_URL is missing"
+      #       exit 1
+      #     fi
 
-          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
-            echo "Missing one or more required GitHub Secrets"
-            exit 1
-          fi
-
-          rm -rf _site
-          mkdir -p _site
-
-          rsync -a --exclude 'app-config.local.js' --exclude '.git' --exclude '.github' ./ _site/
-
-          cat > _site/app-config.js <<EOF
-            window.APP_CONFIG = {
-              TELEGRAM_BOT_TOKEN: "$TELEGRAM_BOT_TOKEN",
-              TELEGRAM_CHAT_ID: "$TELEGRAM_CHAT_ID"
-            };
-            EOF
+      #     sed -i "s|__GOOGLE_SHEET_WEBHOOK_URL__|$GOOGLE_SHEET_WEBHOOK_URL|g" index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -52,7 +39,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
+          path: .
 
       - name: Deploy to GitHub Pages
         id: deployment
