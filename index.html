@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cam Decor - Ghế Thư Giãn Cao Cấp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cam: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c', // Main brand color
+                            700: '#c2410c',
+                            800: '#9a3412',
+                        },
+                        sand: '#f5f5f0'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Styles for hiding scrollbar in certain areas if needed */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* FAQ Accordion transition */
+        .faq-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-content.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-icon.open {
+            transform: rotate(180deg);
+        }
+        
+        /* Add some padding to body so the sticky top doesn't hide content */
+        body { padding-top: 104px; } /* 40px topbar + 64px header */
+        @media (max-width: 768px) {
+            body { padding-top: 96px; padding-bottom: 60px; } /* padding bottom for mobile sticky bar */
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-white antialiased">
+
+    <!-- Sticky Top Bar -->
+    <div class="fixed top-0 left-0 right-0 h-[40px] bg-cam-800 text-white z-50 flex items-center justify-between px-4 md:px-8 text-xs md:text-sm font-medium">
+        <div class="flex items-center space-x-4">
+            <span class="hidden md:inline-flex items-center"><i class="fa-solid fa-truck-fast mr-2"></i> Miễn phí giao hàng toàn quốc</span>
+            <span class="inline-flex md:hidden items-center"><i class="fa-solid fa-truck-fast mr-2"></i> Freeship toàn quốc</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="tel:0901234567" class="hover:text-cam-100 transition"><i class="fa-solid fa-phone mr-1"></i> Hotline: 090 123 4567</a>
+            <a href="#" class="hidden md:inline-flex hover:text-cam-100 transition"><i class="fa-solid fa-comment-dots mr-1"></i> Zalo CSKH</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-[40px] left-0 right-0 h-[64px] bg-white shadow-sm z-40 flex items-center justify-between px-4 md:px-8">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+            <div class="w-8 h-8 bg-cam-600 rounded-full flex items-center justify-center text-white font-serif font-bold text-lg shadow-md">C</div>
+            <span class="font-serif font-bold text-xl md:text-2xl text-gray-900 tracking-tight">Cam Decor</span>
+        </div>
+        <!-- Minimalist Nav -->
+        <nav class="hidden md:flex items-center space-x-6 font-medium text-sm text-gray-600">
+            <a href="#features" class="hover:text-cam-600 transition">Điểm nổi bật</a>
+            <a href="#reviews" class="hover:text-cam-600 transition">Đánh giá</a>
+            <a href="#faq" class="hover:text-cam-600 transition">Hỏi đáp</a>
+        </nav>
+        <div class="flex items-center">
+            <a href="#order-form" class="bg-cam-600 hover:bg-cam-700 text-white px-5 py-2 rounded-full font-semibold text-sm transition shadow-lg shadow-cam-600/30">
+                Đặt Hàng Ngay
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative bg-sand pt-8 pb-16 md:pt-16 md:pb-24 overflow-hidden">
+        <!-- Decorative blob -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-cam-100 opacity-50 blur-3xl"></div>
+        
+        <div class="max-w-6xl mx-auto px-4 md:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+                <!-- Text Content -->
+                <div class="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-white px-3 py-1 rounded-full text-cam-600 font-semibold text-xs mb-4 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-cam-600 animate-pulse"></span>
+                        <span>Best Seller 2026</span>
+                    </div>
+                    <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 mb-4">
+                        Tựa Lưng Êm Ái,<br> <span class="text-cam-600">Sống Đầy Thư Thái</span>
+                    </h1>
+                    <p class="text-gray-600 text-base md:text-lg mb-6 max-w-md">
+                        Ghế thư giãn Cam Decor - Giải pháp hoàn hảo cho cột sống của bạn sau một ngày làm việc mệt mỏi. Thiết kế công thái học chuẩn Châu Âu.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row items-center gap-4 mb-8 w-full md:w-auto">
+                        <div class="text-center sm:text-left bg-white p-3 rounded-xl shadow-sm border border-gray-100 w-full sm:w-auto">
+                            <span class="line-through text-gray-400 text-sm block">Giá gốc: 4.500.000đ</span>
+                            <span class="text-cam-600 font-bold text-2xl md:text-3xl">2.850.000đ</span>
+                        </div>
+                        <a href="#order-form" class="w-full sm:w-auto bg-cam-600 hover:bg-cam-700 text-white text-center px-8 py-4 rounded-xl font-bold text-lg transition shadow-xl shadow-cam-600/30 flex items-center justify-center gap-2 transform hover:-translate-y-1">
+                            <i class="fa-solid fa-cart-shopping"></i> Mua Ngay Giảm 35%
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 text-sm text-gray-500">
+                        <div class="flex -space-x-2">
+                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=1" alt="User">
+                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=2" alt="User">
+                            <img class="w-8 h-8 rounded-full border-2 border-white" src="https://i.pravatar.cc/100?img=3" alt="User">
+                            <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold">+2k</div>
+                        </div>
+                        <p>Đã bán <span class="font-bold text-gray-800">2,450+</span> chiếc</p>
+                    </div>
+                </div>
+                
+                <!-- Image Content -->
+                <div class="w-full md:w-1/2 relative">
+                    <!-- Main Image Placeholder (Using generic modern chair image) -->
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5] md:aspect-square bg-gray-100">
+                        <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Ghế thư giãn Cam Decor" class="w-full h-full object-cover object-center">
+                        
+                        <!-- Floating badge -->
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg font-bold text-cam-600 flex flex-col items-center">
+                            <i class="fa-solid fa-medal text-xl mb-1"></i>
+                            <span class="text-xs">Bảo hành 2 năm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section id="trust-badges" class="bg-white py-8 border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 bg-cam-50 text-cam-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-truck-fast"></i></div>
+                    <h3 class="font-bold text-sm md:text-base text-gray-900">Miễn Phí Vận Chuyển</h3>
+                    <p class="text-xs text-gray-500 mt-1">Toàn quốc, giao tận cửa</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 bg-cam-50 text-cam-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-rotate-left"></i></div>
+                    <h3 class="font-bold text-sm md:text-base text-gray-900">Đổi Trả 7 Ngày</h3>
+                    <p class="text-xs text-gray-500 mt-1">Lỗi 1 đổi 1 miễn phí</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 bg-cam-50 text-cam-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3 class="font-bold text-sm md:text-base text-gray-900">Bảo Hành 2 Năm</h3>
+                    <p class="text-xs text-gray-500 mt-1">Khung sườn & đệm mút</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-12 h-12 bg-cam-50 text-cam-600 rounded-full flex items-center justify-center text-xl mb-3"><i class="fa-solid fa-check-to-slot"></i></div>
+                    <h3 class="font-bold text-sm md:text-base text-gray-900">Kiểm Tra Trực Tiếp</h3>
+                    <p class="text-xs text-gray-500 mt-1">Kiểm hàng trước khi thanh toán</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section id="offer-countdown" class="bg-cam-600 py-6 text-white">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-bolt text-3xl text-yellow-300"></i>
+                <div>
+                    <h3 class="font-bold text-lg md:text-xl uppercase tracking-wider">Ưu Đãi Flash Sale</h3>
+                    <p class="text-cam-100 text-sm">Chỉ còn 50 suất giảm giá 35% + Tặng gối tựa cổ</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2 font-mono" id="countdown-timer">
+                <div class="bg-cam-800 text-white rounded p-2 text-center w-12 shadow-inner">
+                    <span id="cd-hours" class="block font-bold text-xl">00</span>
+                    <span class="text-[10px] uppercase">Giờ</span>
+                </div>
+                <span class="font-bold text-xl">:</span>
+                <div class="bg-cam-800 text-white rounded p-2 text-center w-12 shadow-inner">
+                    <span id="cd-mins" class="block font-bold text-xl">00</span>
+                    <span class="text-[10px] uppercase">Phút</span>
+                </div>
+                <span class="font-bold text-xl">:</span>
+                <div class="bg-cam-800 text-white rounded p-2 text-center w-12 shadow-inner">
+                    <span id="cd-secs" class="block font-bold text-xl">00</span>
+                    <span class="text-[10px] uppercase">Giây</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4">Trải Nghiệm Thực Tế</h2>
+            <p class="text-gray-600 mb-8">Xem video để cảm nhận độ êm ái và thiết kế tinh tế của chiếc ghế Cam Decor.</p>
+            
+            <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-gray-900 aspect-video group cursor-pointer">
+                <!-- Fallback image acting as video cover -->
+                <img src="https://images.unsplash.com/photo-1540932239986-30128078f3b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Video cover" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-500">
+                <!-- Play button overlay -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-white/90 rounded-full flex items-center justify-center text-cam-600 shadow-lg group-hover:bg-white transition duration-300">
+                        <i class="fa-solid fa-play text-2xl md:text-3xl ml-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Points Section -->
+    <section id="pain-points" class="py-16 bg-gray-50 border-y border-gray-200">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">Bạn Đang Gặp Phải Vấn Đề Này?</h2>
+                <div class="w-16 h-1 bg-cam-600 mx-auto rounded"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-gray-800 text-6xl"><i class="fa-solid fa-face-frown"></i></div>
+                    <div class="w-12 h-12 bg-red-100 text-red-500 rounded-full flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-xmark"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Đau lưng, mỏi gáy</h3>
+                    <p class="text-gray-600 text-sm">Ngồi làm việc, xem điện thoại lâu trên những chiếc ghế cứng nhắc gây chèn ép cột sống, mỏi vai gáy triền miên.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-gray-800 text-6xl"><i class="fa-solid fa-temperature-arrow-up"></i></div>
+                    <div class="w-12 h-12 bg-red-100 text-red-500 rounded-full flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-xmark"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Nóng bức, bí bách</h3>
+                    <p class="text-gray-600 text-sm">Chất liệu da công nghiệp rẻ tiền hay vải thô khiến bạn đổ mồ hôi, hầm bí khi ngồi lâu trong thời tiết mùa hè.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 text-gray-800 text-6xl"><i class="fa-solid fa-couch"></i></div>
+                    <div class="w-12 h-12 bg-red-100 text-red-500 rounded-full flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-xmark"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Làm hỏng không gian</h3>
+                    <p class="text-gray-600 text-sm">Thiết kế ghế cồng kềnh, thiếu tính thẩm mỹ làm mất đi vẻ đẹp sang trọng của phòng khách hay phòng làm việc của bạn.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions / Features Section -->
+    <section id="features" class="py-16 md:py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-cam-600 font-bold uppercase tracking-wider text-sm">Giải pháp hoàn hảo</span>
+                <h2 class="font-serif text-3xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Lý Do Chọn Ghế Cam Decor</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Sự kết hợp hoàn hảo giữa kỹ thuật công thái học và nghệ thuật thiết kế nội thất.</p>
+            </div>
+
+            <!-- Feature 1 -->
+            <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
+                <div class="w-full md:w-1/2 order-2 md:order-1">
+                    <h3 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">1. Thiết Kế Công Thái Học Bảo Vệ Cột Sống</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Góc ngả lưng chuẩn 105 độ cùng đường cong chữ S ôm sát cấu trúc cơ thể tự nhiên. Giảm 60% áp lực lên vùng thắt lưng, giúp bạn có thể ngồi đọc sách, xem phim hàng giờ liền mà không cảm thấy nhức mỏi.
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-cam-600 mt-1"></i> <span class="text-gray-700">Gối tựa đầu điều chỉnh đa nấc.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-cam-600 mt-1"></i> <span class="text-gray-700">Đệm eo hỗ trợ thắt lưng dưới tối đa.</span></li>
+                    </ul>
+                </div>
+                <div class="w-full md:w-1/2 order-1 md:order-2">
+                    <img src="https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Công thái học" class="rounded-2xl shadow-lg w-full object-cover aspect-[4/3]">
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
+                <div class="w-full md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chất liệu" class="rounded-2xl shadow-lg w-full object-cover aspect-[4/3]">
+                </div>
+                <div class="w-full md:w-1/2">
+                    <h3 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">2. Chất Liệu Cao Cấp - Mềm Mịn Thoáng Khí</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Sử dụng vải Nỉ nhung/Linen cao cấp dệt theo công nghệ Nano, chống thấm nước nhẹ, chống bám bụi bẩn và dễ dàng vệ sinh. Đệm mút D40 đúc nguyên khối độ đàn hồi cao, không xẹp lún sau 5 năm sử dụng.
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-cam-600 mt-1"></i> <span class="text-gray-700">Thân thiện với làn da, kể cả da em bé.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-cam-600 mt-1"></i> <span class="text-gray-700">Thoáng mát mùa hè, ấm áp mùa đông.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="w-full md:w-1/2 order-2 md:order-1">
+                    <h3 class="font-serif text-2xl md:text-3xl font-bold mb-4 text-gray-900">3. Khung Chân Thép Carbon Chắc Chắn</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Chân ghế được làm từ thép Carbon sơn tĩnh điện chống rỉ sét, chịu tải trọng lên đến 150kg. Thiết kế hình bán nguyệt tăng độ cân bằng, chống lật khi ngả người ra sau. Đế chống trầy xước sàn nhà.
+                    </p>
+                </div>
+                <div class="w-full md:w-1/2 order-1 md:order-2">
+                    <img src="https://images.unsplash.com/photo-1611269154421-4e27233ac5c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Khung chắc chắn" class="rounded-2xl shadow-lg w-full object-cover aspect-[4/3]">
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="#order-form" class="inline-flex items-center gap-2 bg-cam-600 hover:bg-cam-700 text-white px-8 py-3 rounded-full font-bold transition shadow-lg shadow-cam-600/30">
+                    Sở hữu ngay hôm nay <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specs Section -->
+    <section id="specs" class="py-16 bg-gray-900 text-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="font-serif text-3xl font-bold mb-2">Thông Số Kỹ Thuật</h2>
+                <p class="text-gray-400">Chi tiết làm nên sự hoàn hảo</p>
+            </div>
+            
+            <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700">
+                <table class="w-full text-left border-collapse">
+                    <tbody>
+                        <tr class="border-b border-gray-700">
+                            <th class="py-4 px-6 font-semibold text-gray-300 w-1/3">Kích thước (RxSxC)</th>
+                            <td class="py-4 px-6 text-gray-100">75cm x 80cm x 105cm</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 bg-gray-800/50">
+                            <th class="py-4 px-6 font-semibold text-gray-300">Chất liệu vỏ</th>
+                            <td class="py-4 px-6 text-gray-100">Vải Linen Nano / Nỉ nhung Hàn Quốc</td>
+                        </tr>
+                        <tr class="border-b border-gray-700">
+                            <th class="py-4 px-6 font-semibold text-gray-300">Chất liệu đệm</th>
+                            <td class="py-4 px-6 text-gray-100">Mút cao su non D40 nguyên khối</td>
+                        </tr>
+                        <tr class="border-b border-gray-700 bg-gray-800/50">
+                            <th class="py-4 px-6 font-semibold text-gray-300">Chịu tải trọng</th>
+                            <td class="py-4 px-6 text-gray-100">Tối đa 150 kg</td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-6 font-semibold text-gray-300">Bảng màu</th>
+                            <td class="py-4 px-6 flex gap-2">
+                                <div class="w-6 h-6 rounded-full bg-[#D97757] border-2 border-gray-600" title="Cam Đất"></div>
+                                <div class="w-6 h-6 rounded-full bg-[#d2c9b6] border-2 border-gray-600" title="Be Nhạt"></div>
+                                <div class="w-6 h-6 rounded-full bg-[#52555a] border-2 border-gray-600" title="Xám Đậm"></div>
+                                <div class="w-6 h-6 rounded-full bg-[#3d4c53] border-2 border-gray-600" title="Xanh Navy"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fake Warning Section -->
+    <section id="warning" class="py-12 bg-red-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-md border-l-4 border-red-500 flex flex-col md:flex-row gap-6 items-center">
+                <div class="w-20 h-20 bg-red-100 text-red-500 rounded-full flex-shrink-0 flex items-center justify-center text-4xl">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-red-600 mb-2">Cảnh báo hàng giả, hàng nhái kém chất lượng!</h3>
+                    <p class="text-gray-700 text-sm md:text-base">
+                        Hiện nay trên thị trường xuất hiện nhiều sản phẩm nhái kiểu dáng Cam Decor với giá rẻ nhưng sử dụng <strong>khung sắt mỏng, đệm mút tái chế bốc mùi và dễ xẹp lún chỉ sau 1 tháng</strong>.
+                    </p>
+                    <p class="text-gray-700 text-sm md:text-base mt-2 font-semibold">
+                        Hãy chọn mua hàng chính hãng tại đây để đảm bảo sức khỏe và quyền lợi bảo hành 2 năm toàn quốc!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-16 md:py-24 bg-sand">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-900 mb-4">Hàng Ngàn Khách Hàng Đã Tin Dùng</h2>
+                <div class="flex items-center justify-center gap-1 text-yellow-400 text-xl mb-2">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-gray-600">Đánh giá trung bình 4.9/5 từ 1,240+ lượt mua</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://i.pravatar.cc/150?img=12" alt="Avatar" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-gray-900">Anh Tuấn Minh</h4>
+                            <div class="flex text-yellow-400 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm italic mb-4">"Ghế rất êm, mua màu cam đất hợp tone phòng khách nhà mình dã man. Từ ngày có ghế này tối nào về cũng tranh nhau ngồi xem Netflix. Giao hàng cực nhanh, bọc cẩn thận."</p>
+                    <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Ảnh feedback" class="w-full h-32 object-cover rounded-lg">
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="Avatar" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-gray-900">Chị Lan Phương</h4>
+                            <div class="flex text-yellow-400 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm italic mb-4">"Mua tặng bố mẹ để các cụ ngồi đọc báo. Mút xịn không bị lún, vải mịn mát không bị nóng lưng như da. Rất ưng ý với thái độ của bạn CSKH tư vấn. Sẽ ủng hộ thêm."</p>
+                    <img src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Ảnh feedback" class="w-full h-32 object-cover rounded-lg">
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-gray-900">Hoàng Nam (Freelancer)</h4>
+                            <div class="flex text-yellow-400 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm italic mb-4">"Làm việc ở nhà cả ngày mỏi lưng quá nên chốt luôn. Điểm 10 cho chất lượng, ngồi làm việc với laptop hay ngủ trưa trên ghế luôn cũng được vì độ ngả rất vừa vặn."</p>
+                    <div class="h-32 bg-gray-100 flex items-center justify-center rounded-lg text-gray-400">
+                        <i class="fa-solid fa-image text-3xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 bg-white">
+        <div class="max-w-3xl mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="font-serif text-3xl font-bold text-gray-900">Câu Hỏi Thường Gặp</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden bg-gray-50">
+                    <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-bold text-gray-900">Bao lâu thì tôi nhận được hàng?</span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-gray-500"></i>
+                    </button>
+                    <div class="faq-content bg-white px-6">
+                        <p class="py-4 text-gray-600 text-sm border-t border-gray-100">
+                            Khách hàng tại khu vực Hà Nội và TP.HCM sẽ nhận hàng trong vòng 24h. Các tỉnh thành khác thời gian giao hàng từ 2-4 ngày làm việc.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden bg-gray-50">
+                    <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-bold text-gray-900">Tôi có được kiểm tra hàng trước khi thanh toán không?</span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-gray-500"></i>
+                    </button>
+                    <div class="faq-content bg-white px-6">
+                        <p class="py-4 text-gray-600 text-sm border-t border-gray-100">
+                            Hoàn toàn ĐƯỢC. Chúng tôi khuyến khích khách hàng mở thùng, kiểm tra kỹ màu sắc, chất liệu và độ nguyên vẹn của sản phẩm trước khi thanh toán cho Shipper.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden bg-gray-50">
+                    <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-bold text-gray-900">Bảo hành 2 năm bao gồm những gì?</span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-gray-500"></i>
+                    </button>
+                    <div class="faq-content bg-white px-6">
+                        <p class="py-4 text-gray-600 text-sm border-t border-gray-100">
+                            Chính sách bảo hành bao gồm 1 đổi 1 trong 7 ngày đầu nếu có lỗi từ nhà sản xuất. Bảo hành 2 năm đối với khung sườn gãy, nứt và đệm mút bị xẹp lún bất thường. Không bảo hành các vết rách, xước vải do quá trình sử dụng.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden bg-gray-50">
+                    <button class="faq-toggle w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-bold text-gray-900">Vỏ ghế có tháo ra giặt được không?</span>
+                        <i class="fa-solid fa-chevron-down faq-icon text-gray-500"></i>
+                    </button>
+                    <div class="faq-content bg-white px-6">
+                        <p class="py-4 text-gray-600 text-sm border-t border-gray-100">
+                            Được. Toàn bộ vỏ ghế có khóa kéo ẩn thông minh, bạn có thể dễ dàng tháo rời để mang đi giặt khô hoặc giặt máy chế độ nhẹ.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section id="order-form" class="py-16 md:py-24 bg-[url('https://images.unsplash.com/photo-1600121848594-d8644e57abab?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center relative">
+        <div class="absolute inset-0 bg-gray-900/80 backdrop-blur-sm"></div>
+        
+        <div class="max-w-5xl mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-10">
+            <!-- Order Info Text -->
+            <div class="w-full md:w-1/2 text-white">
+                <h2 class="font-serif text-3xl md:text-5xl font-bold mb-4 text-cam-100">Sở Hữu Không Gian Thư Giãn Của Riêng Bạn!</h2>
+                <p class="text-gray-300 text-lg mb-8">Điền thông tin đặt hàng ngay hôm nay để nhận được ưu đãi lớn nhất trong năm.</p>
+                
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center gap-3 bg-white/10 p-4 rounded-lg">
+                        <i class="fa-solid fa-tag text-cam-500 text-xl"></i>
+                        <div>
+                            <span class="block text-sm text-gray-400">Giá khuyến mãi hôm nay</span>
+                            <span class="block font-bold text-2xl">2.850.000đ <span class="text-sm line-through text-gray-500 font-normal">4.500.000đ</span></span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-white/10 p-4 rounded-lg">
+                        <i class="fa-solid fa-gift text-cam-500 text-xl"></i>
+                        <div>
+                            <span class="block font-bold">Quà Tặng Kèm</span>
+                            <span class="block text-sm text-gray-300">01 Gối tựa cổ cao cấp trị giá 350.000đ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Box -->
+            <div class="w-full md:w-1/2">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-2xl relative">
+                    <!-- Ribbon -->
+                    <div class="absolute -top-4 -right-4 bg-red-500 text-white font-bold px-4 py-2 rounded-lg transform rotate-6 shadow-md border-2 border-white">
+                        Giảm 35%
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-center text-gray-900 mb-6">Thông Tin Đặt Hàng</h3>
+                    
+                    <form id="purchase-form" onsubmit="event.preventDefault(); submitForm();" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Họ và Tên *</label>
+                            <input type="text" required placeholder="Nhập họ tên của bạn" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cam-500 focus:border-cam-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Số Điện Thoại *</label>
+                            <input type="tel" required placeholder="Nhập số điện thoại" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cam-500 focus:border-cam-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ giao hàng *</label>
+                            <input type="text" required placeholder="Số nhà, đường, phường/xã, quận/huyện..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-cam-500 focus:border-cam-500 outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Chọn màu sắc *</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="border rounded-lg p-3 cursor-pointer flex items-center gap-2 hover:bg-gray-50 relative">
+                                    <input type="radio" name="color" value="cam" class="text-cam-600 focus:ring-cam-500" checked>
+                                    <div class="w-4 h-4 rounded-full bg-[#D97757]"></div>
+                                    <span class="text-sm font-medium">Cam Đất</span>
+                                </label>
+                                <label class="border rounded-lg p-3 cursor-pointer flex items-center gap-2 hover:bg-gray-50">
+                                    <input type="radio" name="color" value="be" class="text-cam-600 focus:ring-cam-500">
+                                    <div class="w-4 h-4 rounded-full bg-[#d2c9b6]"></div>
+                                    <span class="text-sm font-medium">Be Nhạt</span>
+                                </label>
+                                <label class="border rounded-lg p-3 cursor-pointer flex items-center gap-2 hover:bg-gray-50">
+                                    <input type="radio" name="color" value="xam" class="text-cam-600 focus:ring-cam-500">
+                                    <div class="w-4 h-4 rounded-full bg-[#52555a]"></div>
+                                    <span class="text-sm font-medium">Xám Đậm</span>
+                                </label>
+                                <label class="border rounded-lg p-3 cursor-pointer flex items-center gap-2 hover:bg-gray-50">
+                                    <input type="radio" name="color" value="navy" class="text-cam-600 focus:ring-cam-500">
+                                    <div class="w-4 h-4 rounded-full bg-[#3d4c53]"></div>
+                                    <span class="text-sm font-medium">Xanh Navy</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4">
+                            <button type="submit" class="w-full bg-cam-600 hover:bg-cam-700 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-cam-600/30 flex items-center justify-center gap-2">
+                                HOÀN TẤT ĐẶT HÀNG
+                            </button>
+                            <p class="text-center text-xs text-gray-500 mt-3">Cam kết bảo mật thông tin. Nhân viên sẽ gọi lại xác nhận trong 15 phút.</p>
+                        </div>
+                    </form>
+
+                    <!-- Success Message Box (Hidden by default) -->
+                    <div id="success-message" class="hidden absolute inset-0 bg-white rounded-2xl flex-col items-center justify-center p-6 text-center z-20">
+                        <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-4xl mb-4">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Đặt Hàng Thành Công!</h3>
+                        <p class="text-gray-600 mb-6">Cảm ơn bạn. Chuyên viên của Cam Decor sẽ liên hệ sớm nhất để xác nhận đơn hàng.</p>
+                        <button onclick="document.getElementById('success-message').classList.add('hidden'); document.getElementById('purchase-form').reset();" class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-2 rounded-lg font-medium transition">
+                            Đóng
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 text-sm border-t-4 border-cam-600">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <div class="flex items-center gap-2 mb-4 text-white">
+                    <div class="w-8 h-8 bg-cam-600 rounded-full flex items-center justify-center font-serif font-bold text-lg">C</div>
+                    <span class="font-serif font-bold text-xl tracking-tight">Cam Decor</span>
+                </div>
+                <p class="mb-4">Thương hiệu nội thất thư giãn cao cấp. Mang đến sự thoải mái và vẻ đẹp tinh tế cho không gian sống của bạn.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-cam-600 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-cam-600 hover:text-white transition"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-cam-600 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-xs">Thông tin liên hệ</h4>
+                <ul class="space-y-2">
+                    <li><i class="fa-solid fa-location-dot w-5 text-cam-500"></i> Showroom: 123 Đường Nội Thất, Quận 1, TP.HCM</li>
+                    <li><i class="fa-solid fa-phone w-5 text-cam-500"></i> Hotline: 090 123 4567</li>
+                    <li><i class="fa-solid fa-envelope w-5 text-cam-500"></i> Email: contact@camdecor.vn</li>
+                    <li><i class="fa-solid fa-clock w-5 text-cam-500"></i> Giờ mở cửa: 08:00 - 21:00</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-xs">Pháp lý</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white transition">Chính sách bảo mật</a></li>
+                    <li><a href="#" class="hover:text-white transition">Điều khoản sử dụng</a></li>
+                    <li><a href="#" class="hover:text-white transition">Chính sách đổi trả</a></li>
+                    <li class="mt-4">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Bo_Cong_Thuong_logo.svg/512px-Bo_Cong_Thuong_logo.svg.png" alt="Bộ Công Thương" class="h-10 opacity-70">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto px-4 mt-8 pt-8 border-t border-gray-800 text-center text-xs">
+            &copy; 2026 Cam Decor. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky Bottom Bar -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-5px_10px_rgba(0,0,0,0.05)] z-50 md:hidden flex p-2 gap-2 pb-safe">
+        <a href="tel:0901234567" class="flex-1 bg-green-500 text-white rounded-lg flex flex-col items-center justify-center py-2 text-[10px] font-bold">
+            <i class="fa-solid fa-phone text-lg mb-1"></i> Gọi Ngay
+        </a>
+        <a href="#" class="flex-1 bg-blue-500 text-white rounded-lg flex flex-col items-center justify-center py-2 text-[10px] font-bold">
+            <i class="fa-brands fa-facebook-messenger text-lg mb-1"></i> Nhắn tin
+        </a>
+        <a href="#order-form" class="flex-[2] bg-cam-600 text-white rounded-lg flex flex-col items-center justify-center py-2 text-[12px] font-bold uppercase animate-pulse">
+            <i class="fa-solid fa-cart-shopping text-lg mb-1"></i> Mua Ngay (-35%)
+        </a>
+    </div>
+
+    <!-- Promotional Popup Overlay -->
+    <div id="promo-popup" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl w-full max-w-md overflow-hidden relative transform scale-95 transition-transform duration-300" id="popup-content">
+            <!-- Close Button -->
+            <button onclick="closePopup()" class="absolute top-3 right-3 w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-500 z-10 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="bg-cam-600 p-6 text-center text-white">
+                <h3 class="font-serif text-2xl font-bold mb-1">Chào Bạn Mới! 🎉</h3>
+                <p class="text-cam-100 text-sm">Tặng ngay Voucher giảm thêm</p>
+            </div>
+            
+            <div class="p-6 text-center">
+                <div class="text-4xl font-black text-gray-900 mb-2">100.000Đ</div>
+                <p class="text-gray-600 text-sm mb-6">Cho đơn hàng đầu tiên của bạn hôm nay. Nhập mã dưới đây khi nhân viên gọi xác nhận.</p>
+                
+                <div class="border-2 border-dashed border-cam-500 bg-cam-50 py-3 px-4 rounded-xl flex justify-between items-center mb-6">
+                    <span class="font-mono font-bold text-lg text-cam-700 tracking-widest" id="promo-code">CAMNEW100</span>
+                    <button onclick="copyCode()" class="bg-cam-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-cam-700 transition" id="copy-btn">
+                        Sao chép
+                    </button>
+                </div>
+                
+                <a href="#order-form" onclick="closePopup()" class="block w-full bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-gray-800 transition">
+                    Sử Dụng Ngay
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        
+        // 1. Countdown Timer Logic
+        function startCountdown() {
+            // Set 2 hours from now as dummy flash sale
+            let duration = 2 * 60 * 60 + 45 * 60 + 12; // 2h 45m 12s
+            
+            const hoursEl = document.getElementById('cd-hours');
+            const minsEl = document.getElementById('cd-mins');
+            const secsEl = document.getElementById('cd-secs');
+            
+            const timer = setInterval(function () {
+                let hours = parseInt(duration / 3600, 10);
+                let minutes = parseInt((duration % 3600) / 60, 10);
+                let seconds = parseInt(duration % 60, 10);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                hoursEl.textContent = hours;
+                minsEl.textContent = minutes;
+                secsEl.textContent = seconds;
+
+                if (--duration < 0) {
+                    duration = 0;
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+        startCountdown();
+
+        // 2. FAQ Accordion Logic
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.faq-icon');
+            
+            // Toggle current
+            content.classList.toggle('open');
+            icon.classList.toggle('open');
+            button.parentElement.classList.toggle('border-cam-300');
+            button.parentElement.classList.toggle('shadow-sm');
+            
+            // Optional: Close others (uncomment if you want accordion style)
+            /*
+            document.querySelectorAll('.faq-content').forEach(el => {
+                if(el !== content) {
+                    el.classList.remove('open');
+                    el.previousElementSibling.querySelector('.faq-icon').classList.remove('open');
+                    el.parentElement.classList.remove('border-cam-300', 'shadow-sm');
+                }
+            });
+            */
+        }
+
+        // 3. Form Submit Simulation
+        function submitForm() {
+            const successMsg = document.getElementById('success-message');
+            successMsg.classList.remove('hidden');
+            successMsg.classList.add('flex');
+        }
+
+        // 4. Popup Logic
+        const popup = document.getElementById('promo-popup');
+        const popupContent = document.getElementById('popup-content');
+        
+        function showPopup() {
+            // Check if shown in this session (optional, disabled for preview to always show)
+            // if(sessionStorage.getItem('popupShown')) return; 
+            
+            popup.classList.remove('hidden');
+            // Small delay to allow display:block to apply before animating opacity
+            setTimeout(() => {
+                popup.classList.remove('opacity-0');
+                popupContent.classList.remove('scale-95');
+                popupContent.classList.add('scale-100');
+            }, 10);
+            
+            // sessionStorage.setItem('popupShown', 'true');
+        }
+        
+        function closePopup() {
+            popup.classList.add('opacity-0');
+            popupContent.classList.remove('scale-100');
+            popupContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 300); // match transition duration
+        }
+
+        function copyCode() {
+            const code = document.getElementById('promo-code').innerText;
+            const btn = document.getElementById('copy-btn');
+            
+            // Modern copy to clipboard
+            navigator.clipboard.writeText(code).then(() => {
+                btn.innerText = "Đã chép!";
+                btn.classList.add('bg-green-500');
+                btn.classList.remove('bg-cam-600');
+                
+                setTimeout(() => {
+                    btn.innerText = "Sao chép";
+                    btn.classList.remove('bg-green-500');
+                    btn.classList.add('bg-cam-600');
+                }, 2000);
+            }).catch(err => {
+                // Fallback for older browsers / iframe restrictions
+                const textArea = document.createElement("textarea");
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    btn.innerText = "Đã chép!";
+                    btn.classList.add('bg-green-500');
+                    setTimeout(() => {
+                        btn.innerText = "Sao chép";
+                        btn.classList.remove('bg-green-500');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                }
+                document.body.removeChild(textArea);
+            });
+        }
+
+        // Trigger popup after 3 seconds
+        window.addEventListener('load', () => {
+            setTimeout(showPopup, 3000);
+        });
+        
+        // Close popup when clicking outside
+        popup.addEventListener('click', (e) => {
+            if(e.target === popup) {
+                closePopup();
+            }
+        });
+    </script>
+</body>
+</html>
