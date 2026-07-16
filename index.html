@@ -705,6 +705,8 @@
     </div>
 
     <!-- Scripts -->
+    <!-- Local-only runtime config. Keep file out of git via .gitignore. -->
+    <script src="./app-config.local.js"></script>
     <script>
         
         // 1. Countdown Timer Logic
@@ -769,6 +771,10 @@
         const TELEGRAM_CHAT_ID = APP_CONFIG.TELEGRAM_CHAT_ID || '';
         const ZALO_OA_WEBHOOK_URL = APP_CONFIG.ZALO_OA_WEBHOOK_URL || '';
 
+        function isConfiguredValue(value) {
+            return !!value && !String(value).includes('__');
+        }
+
         function getColorLabel(colorValue) {
             const colorMap = {
                 cam: 'Cam Đất',
@@ -800,8 +806,12 @@
         }
 
         async function sendOrderToGoogleSheet(payload) {
-            if (!GOOGLE_SHEET_WEBHOOK_URL || GOOGLE_SHEET_WEBHOOK_URL.includes('__GOOGLE_SHEET_WEBHOOK_URL__')) {
-                throw new Error('missing_google_sheet_webhook');
+            if (!isConfiguredValue(GOOGLE_SHEET_WEBHOOK_URL)) {
+                return null;
+            }
+
+            if (GOOGLE_SHEET_WEBHOOK_URL.includes('docs.google.com/spreadsheets')) {
+                throw new Error('invalid_google_sheet_url');
             }
 
             await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
@@ -818,11 +828,11 @@
 
         async function sendTelegramNotification(payload) {
             if (!TELEGRAM_BOT_TOKEN) {
-                return false;
+                return null;
             }
 
             if (!TELEGRAM_CHAT_ID) {
-                return false;
+                return null;
             }
 
             const telegramMessage = [
@@ -853,7 +863,7 @@
             // Zalo OA API usually requires server-side token handling.
             // This function posts to your custom webhook gateway.
             if (!ZALO_OA_WEBHOOK_URL) {
-                return false;
+                return null;
             }
 
             const res = await fetch(ZALO_OA_WEBHOOK_URL, {
@@ -900,6 +910,16 @@
             statusEl.classList.add('hidden');
             statusEl.textContent = '';
 
+            const sheetConfigured = isConfiguredValue(GOOGLE_SHEET_WEBHOOK_URL);
+            const telegramConfigured = isConfiguredValue(TELEGRAM_BOT_TOKEN) && isConfiguredValue(TELEGRAM_CHAT_ID);
+            const zaloConfigured = isConfiguredValue(ZALO_OA_WEBHOOK_URL);
+
+            if (!sheetConfigured && !telegramConfigured && !zaloConfigured) {
+                statusEl.textContent = 'Chưa cấu hình nơi nhận đơn. Vui lòng cấu hình Google Sheet hoặc Telegram Bot hoặc Zalo OA webhook.';
+                statusEl.className = 'text-center text-sm mt-3 text-red-600';
+                return;
+            }
+
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
             submitBtn.textContent = 'ĐANG GỬI THÔNG TIN...';
@@ -911,29 +931,54 @@
                     sendZaloNotification(payload)
                 ]);
 
-                if (sheetResult.status !== 'fulfilled') {
-                    throw new Error('sheet_submit_failed');
+                const deliveredChannels = [];
+                const failedChannels = [];
+
+                if (sheetConfigured) {
+                    if (sheetResult.status === 'fulfilled' && sheetResult.value === true) {
+                        deliveredChannels.push('Google Sheet');
+                    } else {
+                        failedChannels.push('Google Sheet');
+                    }
+                }
+
+                if (telegramConfigured) {
+                    if (telegramResult.status === 'fulfilled' && telegramResult.value === true) {
+                        deliveredChannels.push('Telegram');
+                    } else {
+                        failedChannels.push('Telegram');
+                    }
+                }
+
+                if (zaloConfigured) {
+                    if (zaloResult.status === 'fulfilled' && zaloResult.value === true) {
+                        deliveredChannels.push('Zalo OA');
+                    } else {
+                        failedChannels.push('Zalo OA');
+                    }
+                }
+
+                if (deliveredChannels.length === 0) {
+                    throw new Error('all_channels_failed');
                 }
 
                 successMsg.classList.remove('hidden');
                 successMsg.classList.add('flex');
                 form.reset();
 
-                const notifyWarnings = [];
-                if (telegramResult.status === 'rejected' || telegramResult.value === false) {
-                    notifyWarnings.push('Telegram');
-                }
-                if (zaloResult.status === 'rejected' || zaloResult.value === false) {
-                    notifyWarnings.push('Zalo OA');
-                }
-
-                if (notifyWarnings.length > 0) {
-                    statusEl.textContent = 'Đơn hàng đã lưu, nhưng chưa gửi thông báo: ' + notifyWarnings.join(', ');
+                if (failedChannels.length > 0) {
+                    statusEl.textContent = 'Đơn hàng đã gửi thành công qua: ' + deliveredChannels.join(', ') + '. Lỗi ở: ' + failedChannels.join(', ');
                     statusEl.className = 'text-center text-sm mt-3 text-amber-600';
                 }
             } catch (error) {
                 console.error('Submit order failed:', error);
-                statusEl.textContent = 'Không thể gửi đơn hàng. Vui lòng kiểm tra cấu hình webhook hoặc thử lại sau.';
+                if (error && error.message === 'invalid_google_sheet_url') {
+                    statusEl.textContent = 'Bạn đang dùng link Google Sheet. Vui lòng dùng link Web App Apps Script dạng .../exec.';
+                } else if (error && error.message === 'all_channels_failed') {
+                    statusEl.textContent = 'Không thể gửi đơn qua các kênh đã cấu hình. Vui lòng kiểm tra lại Telegram/Sheet/Zalo webhook.';
+                } else {
+                    statusEl.textContent = 'Không thể gửi đơn hàng. Vui lòng kiểm tra cấu hình webhook hoặc thử lại sau.';
+                }
                 statusEl.className = 'text-center text-sm mt-3 text-red-600';
             } finally {
                 submitBtn.disabled = false;
