@@ -10,6 +10,7 @@
       <meta name="keywords" content="">
       <meta name="description" content="Ghế thư giãn quốc dân Cam Decor - Điều chỉnh 5 cấp độ, an toàn cho trẻ nhỏ, giảm đau lưng mẹ bầu. Tặng bộ 5 phụ kiện. Bảo hành 2 năm, hoàn 100% nếu hàng giả.">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+         <script type="text/javascript">(function(){var a=window.location.pathname.toLowerCase();var b=/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);if(b&& !a.endsWith('/mobile.html')&& !a.endsWith('mobile.html')){var c=new URL('mobile.html',window.location.href);c.search=window.location.search;c.hash=window.location.hash;window.location.replace(c.toString());}})();</script>
       <script type="text/javascript">window.ladi_viewport=function(b){var a=document;b=b?b:'innerWidth';var c=window[b];var d=c<768;if(typeof window.ladi_is_desktop=="undefined"||window.ladi_is_desktop==undefined){window.ladi_is_desktop=!d;}var e=1200;var f=420;var g='';if(!d){g="width="+e+",user-scalable=no,initial-scale=1.0";}else{var h=1;var i=f;if(i!=c){h=c / i;}g="width="+i+",user-scalable=no,initial-scale="+h+",minimum-scale="+h+",maximum-scale="+h;}var j=a.getElementById("viewport");if(!j){j=a.createElement("meta");j.id="viewport";j.name="viewport";a.head.appendChild(j);}j.setAttribute("content",g);};window.ladi_viewport();window.ladi_fbq_data = [];window.ladi_fbq = function () {window.ladi_fbq_data.push(arguments);};window.ladi_ttq_data = [];window.ladi_ttq = function () {window.ladi_ttq_data.push(arguments);};</script>
       <meta id="viewport" name="viewport" content="width=1200,user-scalable=no,initial-scale=1.0">
       <link rel="canonical" href="http://minhphatfurniture.com/pages/ghethugian">
@@ -7605,5 +7606,67 @@
             )();
         </script>
       <script type="text/javascript" defer="" src="./assets/ladipage.formdata.min.js"></script>
+      <script type="text/javascript">
+         (function () {
+            function syncShippingFieldValidation(form) {
+               var shippingBlock = form ? form.querySelector('.block-address-shipping-payment') : null;
+               if (!shippingBlock) {
+                  return;
+               }
+
+               var isHidden = window.getComputedStyle(shippingBlock).display === 'none';
+               var selects = shippingBlock.querySelectorAll('select');
+
+               selects.forEach(function (select) {
+                  if (typeof select.dataset.initialRequired === 'undefined') {
+                     select.dataset.initialRequired = select.required ? 'true' : 'false';
+                  }
+
+                  if (isHidden) {
+                     select.required = false;
+                     select.disabled = true;
+                     select.value = '';
+                  } else {
+                     select.disabled = false;
+                     select.required = select.dataset.initialRequired === 'true';
+                  }
+               });
+            }
+
+            function watchShippingFieldValidation(form) {
+               var shippingBlock = form ? form.querySelector('.block-address-shipping-payment') : null;
+               if (!shippingBlock || shippingBlock.dataset.validationObserverAttached === 'true') {
+                  return;
+               }
+
+               shippingBlock.dataset.validationObserverAttached = 'true';
+
+               var observer = new MutationObserver(function () {
+                  syncShippingFieldValidation(form);
+               });
+
+               observer.observe(shippingBlock, {
+                  attributes: true,
+                  attributeFilter: ['class', 'style']
+               });
+            }
+
+            function initShippingFieldValidation() {
+               var form = document.getElementById('form_submit_modal_spm');
+               if (!form) {
+                  return;
+               }
+
+               syncShippingFieldValidation(form);
+               watchShippingFieldValidation(form);
+            }
+
+            if (document.readyState === 'loading') {
+               document.addEventListener('DOMContentLoaded', initShippingFieldValidation);
+            } else {
+               initShippingFieldValidation();
+            }
+         })();
+      </script>
    </body>
 </html>
